@@ -1,5 +1,6 @@
 package com.org.multipledatabases.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,6 +14,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(
@@ -25,7 +27,10 @@ public class MysqlDataSourceConfig {
     @Bean(name = "mysqlDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.mysql")
     public DataSource mysqlDataSource() {
-        return DataSourceBuilder.create().build();
+        HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
+        dataSource.setMinimumIdle(5);
+        dataSource.setMaximumPoolSize(10);
+        return dataSource;
     }
 
     @Bean(name = "mysqlEntityManagerFactory")
@@ -36,6 +41,13 @@ public class MysqlDataSourceConfig {
         em.setPackagesToScan(new String[]{"com.org.multipledatabases.mysql.entity"});
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
+
+        Properties properties = new Properties();
+        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.format_sql", "true");
+        em.setJpaProperties(properties);
+
         return em;
     }
 

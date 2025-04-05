@@ -18,28 +18,27 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.org.multipledatabases.postgresql",
-        entityManagerFactoryRef = "postgresqlEntityManagerFactory",
-        transactionManagerRef = "postgresqlTransactionManager"
+        basePackages = "com.org.multipledatabases.sqlserver",
+        entityManagerFactoryRef = "sqlserverEntityManagerFactory",
+        transactionManagerRef = "sqlserverTransactionManager"
 )
-public class PostgresqlDataSourceConfig {
+public class SqlserverDataSourceConfig {
 
-    @Bean(name = "postgresqlDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.postgresql")
-    public DataSource postgresqlDataSource() {
+    @Bean(name = "sqlserverDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.sqlserver")
+    public DataSource sqlserverDataSource() {
         HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
         dataSource.setMinimumIdle(5);
         dataSource.setMaximumPoolSize(10);
         return dataSource;
     }
 
-    @Bean(name = "postgresqlEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean postgresqlEntityManagerFactory(
-            @Qualifier("postgresqlDataSource") DataSource dataSource) {
-
+    @Bean(name = "sqlserverEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean sqlserverEntityManagerFactory(
+            @Qualifier("sqlserverDataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan(new String[]{"com.org.multipledatabases.postgresql.entity"});
+        em.setPackagesToScan(new String[]{"com.org.multipledatabases.sqlserver.entity"});
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
 
@@ -52,9 +51,9 @@ public class PostgresqlDataSourceConfig {
         return em;
     }
 
-    @Bean(name = "postgresqlTransactionManager")
-    public PlatformTransactionManager postgresqlTransactionManager(
-            @Qualifier("postgresqlEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean(name = "sqlserverTransactionManager")
+    public PlatformTransactionManager sqlserverTransactionManager(
+            @Qualifier("sqlserverEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

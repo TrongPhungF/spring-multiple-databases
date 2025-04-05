@@ -1,4 +1,4 @@
-package com.org.multipledatabases.mysql.entity;
+package com.org.multipledatabases.sqlserver.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +21,6 @@ import java.time.LocalDate;
 public class User {
     @Id
     private Long id;
-    private String username;
+    private String userName;
     private LocalDate birthDay;
 }

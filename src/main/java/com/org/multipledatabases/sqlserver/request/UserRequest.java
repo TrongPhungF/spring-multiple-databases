@@ -1,8 +1,5 @@
-package com.org.multipledatabases.mysql.entity;
+package com.org.multipledatabases.sqlserver.request;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,11 +13,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
+public class UserRequest {
     private Long id;
-    private String username;
+    private String userName;
     private LocalDate birthDay;
 }

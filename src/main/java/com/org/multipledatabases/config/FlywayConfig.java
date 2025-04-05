@@ -12,20 +12,20 @@ public class FlywayConfig {
 
     @Bean
     public Flyway flywayPostgresql(@Qualifier("postgresqlDataSource") DataSource postgresqlDataSource) {
-        Flyway flyway = Flyway.configure()
+        // Specify location for PostgreSQL migrations
+        return Flyway.configure()
                 .dataSource(postgresqlDataSource)
                 .locations("classpath:db/migration/postgresql") // Specify location for PostgreSQL migrations
                 .load();
-        return flyway;
     }
 
     @Bean
     public Flyway flywayMysql(@Qualifier("mysqlDataSource") DataSource mysqlDataSource) {
-        Flyway flyway = Flyway.configure()
+        // Specify location for MySQL migrations
+        return Flyway.configure()
                 .dataSource(mysqlDataSource)
                 .locations("classpath:db/migration/mysql") // Specify location for MySQL migrations
                 .load();
-        return flyway;
     }
 
 //    @Bean

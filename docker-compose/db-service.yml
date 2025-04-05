@@ -43,6 +43,18 @@ services:
     volumes:
       - mongodb_data:/data/db
     restart: always
+  # SQL Server service
+  db_sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: sqlserver-db
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "sqlserver"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
 
 volumes:
   postgres_data:
@@ -50,4 +62,6 @@ volumes:
   mysql_data:
     driver: local
   mongodb_data:
+    driver: local
+  sqlserver_data:
     driver: local
