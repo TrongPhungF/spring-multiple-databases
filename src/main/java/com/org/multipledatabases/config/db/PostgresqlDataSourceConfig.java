@@ -1,8 +1,9 @@
-package com.org.multipledatabases.config;
+package com.org.multipledatabases.config.db;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +25,14 @@ import java.util.Properties;
 )
 public class PostgresqlDataSourceConfig {
 
+    @Value("${spring.datasource.postgresql.hikari.pool-name}")
+    private String poolName;
+
     @Bean(name = "postgresqlDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.postgresql")
     public DataSource postgresqlDataSource() {
         HikariDataSource dataSource = (HikariDataSource) DataSourceBuilder.create().build();
-        dataSource.setMinimumIdle(5);
-        dataSource.setMaximumPoolSize(10);
+        dataSource.setPoolName(poolName);
         return dataSource;
     }
 
@@ -44,7 +47,7 @@ public class PostgresqlDataSourceConfig {
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "true");
         em.setJpaProperties(properties);

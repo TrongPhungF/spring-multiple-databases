@@ -1,4 +1,4 @@
-package com.org.multipledatabases.mongodb.dto;
+package com.org.multipledatabases.oracle.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +13,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
-
+public class ShippingUserDto {
     private Long id;
-    private String username;
+    private String userName;
     private LocalDate birthDay;
 }

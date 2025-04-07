@@ -49,11 +49,25 @@ services:
     container_name: sqlserver-db
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: "sqlserver"
+      SA_PASSWORD: "sqlserver@123"
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+    restart: always
+
+  # Oracle Database service
+  db_oracle:
+    image: container-registry.oracle.com/database/enterprise:latest
+    container_name: oracle-db
+    environment:
+      - ORACLE_PWD=orAcle@123
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
     restart: always
 
 volumes:
@@ -65,3 +79,5 @@ volumes:
     driver: local
   sqlserver_data:
     driver: local
+  oracle_data:
+      driver: local

@@ -1,22 +1,23 @@
-package com.org.multipledatabases.mongodb.entity;
+package com.org.multipledatabases.oracle.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(value = "address")
-public class Address {
-
+@Entity
+@Table(name = "shipping")
+public class Shipping {
     @Id
     private Long id;
-    private String addressName;
+    private String shipName;
 }
