@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController(value = "/api/v1/user")
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserRepository userRepository;
 
-
-    @GetMapping("")
+    @GetMapping("/api/v1/users")
     public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }

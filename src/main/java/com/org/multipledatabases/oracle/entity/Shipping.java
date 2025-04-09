@@ -1,5 +1,6 @@
 package com.org.multipledatabases.oracle.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -15,9 +16,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "shipping")
+@Table(name = "SHIPPING")
 public class Shipping {
+
     @Id
     private Long id;
+
+    @Column(name = "SHIP_NAME")
     private String shipName;
 }
